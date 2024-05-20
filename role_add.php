@@ -1,15 +1,26 @@
 <?php
 include 'config.php';
-$view = $connect->query("SELECT * FROM barang");
+session_start();
+
+if (isset($_POST['simpan'])){
+     $nama = $_POST['nama'];
+
+     mysqli_query($dbconnect,"INSERT INTO role values('','$nama')");
+
+     $_SESSION['success'] = 'berhasil menambahkan data';
+
+     header("location:role.php");
+}
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>barang yang ada di gudang </title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-       
-    </head>
-    <body>
+<head>
+     <title> tambah role </title>
+     <link rel="stylesheet" href="https://maxcdn.boostrapcdn.com/booststrap/3.3.7/css/bootstrap.min.css"
+     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
     <div class="container">
         <h1>List Barang</h1>
         <a href="barang_add.php" class="btn btn-primary">Tambah Data</a>
@@ -32,7 +43,7 @@ $view = $connect->query("SELECT * FROM barang");
                 <td><?= $row['harga'] ?></td>
                 <td><?= $row['stock'] ?></td>
                 <td><?= $row['tanggal_masuk'] ?></td>
-                <td><?= $row['level'] ?></td>
+                <td><?= $row['role'] ?></td>
                 <td>
                     <a href="barang_edit.php?id=<?= $row['id_barang']?>">Edit</a> | 
                     <a href="barang_hapus.php?id=<?= $row['id_barang']?>">Hapus</a>
@@ -41,9 +52,6 @@ $view = $connect->query("SELECT * FROM barang");
             <?php }
 
             ?>
-
-
-
         </table>
     </div>
     </body>
